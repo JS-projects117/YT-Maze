@@ -22,7 +22,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-restclient")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	//developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-rest-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-restclient-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")

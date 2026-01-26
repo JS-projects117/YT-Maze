@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RandVidFinderApplication {
 
 	public static void main(String[] args) {
+		System.out.print("Starting application...");
 		SpringApplication.run(RandVidFinderApplication.class, args);
 	}
 
