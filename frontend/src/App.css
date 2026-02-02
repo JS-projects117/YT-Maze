@@ -1,0 +1,36 @@
+.app_container{
+  text-align: center;
+  background-color: #252446;
+  width: 100vw;
+  height: 100vh;
+  align-content: center;
+}
+
+button{
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #203562;
+  border-color: #1e579c;
+  margin-top: 10px;
+  border-radius: 10px;
+
+}
+
+.header_navbar{
+  width:100vw;
+  height: 100px;
+background-color:#201533;
+position: fixed;
+top: 0;
+left: 0;
+margin-top: 0;
+-webkit-text-fill-color: #0ce6f2;
+align-content: center;
+flex-direction: column-reverse ;
+}
+
+.video_container{
+  margin-top: 120px;
+}
