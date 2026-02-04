@@ -34,3 +34,20 @@ flex-direction: column-reverse ;
 .video_container{
   margin-top: 120px;
 }
+
+.carousel_container{
+  position: relative;
+  height: 700px;
+}
+
+/* .video_nav_buttons{
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  margin-top: 20px;
+} */
+
+.carousel_wrapper{
+  display: flex;
+  flex-direction: column;
+}
