@@ -1,25 +1,25 @@
 import { createContext, useContext, useRef, useState, useEffect   } from "react";
-
+import {nouns} from "./wordBank";
 
 const FetchVidContext = createContext();
 
 
 export function FetchVidProvider({children}){
     //set back to [] later after testing and re-add api key
-const [prevVid, setPrevVidID] = useState([
-  "dQw4w9WgXcQ", // Rick Astley
-  "3JZ_D3ELwOQ", // Charlie bit my finger
-  "L_jWHffIx5E", // Smells Like Teen Spirit
-  "9bZkp7q19f0", // Gangnam Style
-  "kJQP7kiw5Fk", // Despacito
-  "fLexgOxsZu0", // Uptown Funk
-  "hTWKbfoikeg", // Nirvana - Smells Like Teen Spirit alt
-  "e-ORhEE9VVg", // Taylor Swift - Blank Space
-  "CevxZvSJLk8", // Katy Perry - Roar
-  "OPf0YbXqDm0", // Mark Ronson - Uptown Funk
-  "V-_O7nl0Ii0", // Nyan Cat
-  "tAGnKpE4NCI", // Nothing Else Matters
-]);
+const [prevVid, setPrevVidID] = useState([]);
+//   "dQw4w9WgXcQ", // Rick Astley
+//   "3JZ_D3ELwOQ", // ray williamoid
+//   "L_jWHffIx5E", // Smells Like Teen Spirit
+//   "9bZkp7q19f0", // Gangnam Style
+//   "kJQP7kiw5Fk", // Despacito
+//   "fLexgOxsZu0", // Uptown Funk
+//   "hTWKbfoikeg", // Nirvana - Smells Like Teen Spirit alt
+//   "e-ORhEE9VVg", // Taylor Swift - Blank Space
+//   "CevxZvSJLk8", // Katy Perry - Roar
+//   "OPf0YbXqDm0", // Mark Ronson - Uptown Funk
+//   "V-_O7nl0Ii0", // Nyan Cat
+//   "tAGnKpE4NCI", // Nothing Else Matters
+// ]);
 const [currentVidID, setCurrentVidID] = useState(null);
 const currentVidIndex = useRef(null);
 
@@ -29,8 +29,8 @@ const addVidToMemory = (vidID) =>{
 }
 
 const getPrevVidID = () =>{
-    let currVidIDIndex = prevVid.indexOf(currentVidID);
-    return currVidIDIndex - 1 > 0 ? prevVid[currVidIDIndex - 1] : null;
+    let currVidIDIndex = currentVidIndex.current
+    return currVidIDIndex - 1 >= 0 ? prevVid[currVidIDIndex - 1] : null;
 }
 
 const getSavedVidList = () => {
@@ -38,33 +38,34 @@ const getSavedVidList = () => {
 }
 
 const moveToPrevVidID = () => {
-    let i = prevVid.indexOf(currentVidID);
-    currentVidIndex.current = i;
-        if(currentVidIndex.current - 1 > 0){
-setCurrentVidID(prevVid[currentVidIndex.current - 1]);
+    let i = currentVidIndex.current;
+        if(i - 1 > 0){
+        currentVidIndex.current = i - 1;
+setCurrentVidID(prevVid[currentVidIndex.current]);
     }
     else if(prevVid.length > 0){
-setCurrentVidID(prevVid[0])
+        currentVidIndex.current = 0;
+setCurrentVidID(prevVid[currentVidIndex.current]);
     }
     else{
-        setCurrentVidID(null)
+        APIFindVidBySearch();
     }
 }
 
 const moveToNextVidID = async () => {
 
     //could be improved by using map or saving index, however for this small scale projects its unnecessary
-if(prevVid != null && currentVidID != null){
+if(prevVid != null){
 
     //console.log(prevVid.length.toString() + " " + prevVid.findIndex(currentVidID).toString());
 
-    let i = prevVid.indexOf(currentVidID);
+    let i = currentVidIndex.current;
 
     if(i + 1 < prevVid.length){
        
-        setCurrentVidID(prevVid[currentVidIndex.current + 1]);
-         console.log("Moved to next video:  " + currentVidIndex.current + 1);
-             currentVidIndex.current = i;
+        currentVidIndex.current = i + 1;
+        setCurrentVidID(prevVid[currentVidIndex.current]);
+         console.log("Moved to next video:  " + currentVidIndex.current);
 return;
 }
     console.log("Fetching new video as there is no current video");
@@ -74,11 +75,12 @@ return;
 }
 const GenerateSearchWords = () => {
 
-   let stramg = ["dog ","minecraft ","cat ","dirt ","bug ","thing" ];   
+   let stramg = nouns;  
       let newWord = ""
-      for(let i = 0; i < (Math.random() * (stramg.length - 1)) ;i++){
-        newWord += stramg[Math.floor(Math.random() * stramg.length)]
+      for(let i = 0; i < (Math.random() * 3) ;i++){
+        newWord += stramg[Math.floor(Math.random() * stramg.length)] + " ";
       }
+      console.log("Generated search word: " + newWord);
   return(
     newWord
   )
@@ -86,7 +88,7 @@ const GenerateSearchWords = () => {
   
 const APIFindVidBySearch = async () => {
     console.log("start of fetch");
-    const API_KEY = "ur mom";
+    const API_KEY = "no your mom"; // Replace with your actual API key
     let searchWord = GenerateSearchWords();
 //fetches 1st video from youtube api v3
 await fetch(`https://www.googleapis.com/youtube/v3/search?` +
@@ -94,6 +96,7 @@ await fetch(`https://www.googleapis.com/youtube/v3/search?` +
     ).then(response => response.json().then(data => {
          if (data.items && data.items.length > 0) {
          addVidToMemory(data.items[0].id.videoId);
+         currentVidIndex.current = prevVid.length;
          console.log("Fetched new video with search term: " + searchWord);
       }
       else{
@@ -107,9 +110,9 @@ await fetch(`https://www.googleapis.com/youtube/v3/search?` +
 }
 
 
-// useEffect(() => {
-//     moveToNextVidID();
-// }, []);
+useEffect(() => {
+    moveToNextVidID();
+}, []);
 return(
     <FetchVidContext.Provider value={{addVidToMemory, getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex}}>
         {children}

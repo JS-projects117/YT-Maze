@@ -42,43 +42,56 @@ useEffect(() => {
 }, []);
 
 
-console.log(getPrevVidID());
+console.log("VIDEO ID:  " + currentVidID);
 return(
 
   <div className="carousel_container" ref={containerRef}>
 
       {getSavedVidList().map((vidID, index) => {
         
+//calculates offset from current vid and adjusts sizes to emphasize current video
+let vidWidthHeight = 450;
+
 
               let currVid = currentVidIndex.current;
 //restricts rendered vids to only 5 on screen at a time
-if(!(Math.abs(index - currVid) < 3)){
+let imgDistance = Math.abs(index - currVid)
+if(!(imgDistance < 3)){
   return;
 }
 
-//calculates offset from current vid and adjusts sizes to emphasize current video
-      let vidWidth = 450;
-      let vidHeight = 450
-      let xOffset = 0
+let xOffset = 0;
+
 let sizeOffset = Math.abs(index - currVid) + 1;
+let scaledWidth = vidWidthHeight / sizeOffset;
 
-      if (index > currVid){
-        xOffset = (index - currVid) * vidWidth;
-        xOffset += vidWidth/index;
-      }
-      else if (index < currVid){
-        xOffset = -1 * (currVid - index) * vidWidth;
-        xOffset += vidWidth/index;
-      }
+// base spacing between video centers (fixed, independent of scaled width)
+let baseSpacing = 420;
 
+// calculate distance from center
+let distance = index - currVid;
+
+// X offset = distance * baseSpacing
+xOffset = distance * baseSpacing;
+
+if(index !== currVid){
         return(
-    console.log("x center is " + centerX),
+    //console.log("x center is " + centerX),
     //divides width by 2 to center video at a position then applies calculated offset e.g. + xOffset
-    <div className="video_container" style={{transform: `translateX(${((centerX - (vidWidth/2)) + xOffset)}px) translateY(20px)`, position: "absolute"}}>
-<img width={(vidWidth / sizeOffset)} height={vidHeight / sizeOffset} src={`https://img.youtube.com/vi/${vidID}/hqdefault.jpg`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    <div className="video_container" style={{transform: `translateX(${((centerX - (scaledWidth/2)) + xOffset)}px) translateY(20px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
+<img width={(scaledWidth)} height={scaledWidth} src={`https://img.youtube.com/vi/${vidID}/hqdefault.jpg`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </img>
     </div>
         )
+      }
+      else{
+return(
+    <div className="video_container" style={{transform: `translateX(${((centerX - (scaledWidth/2)) + xOffset)}px) translateY(20px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
+<iframe width={scaledWidth} height={scaledWidth} src={`https://www.youtube.com/embed/${vidID}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen>
+</iframe>
+    </div>
+)
+        }
       }
       )}
   </div>
