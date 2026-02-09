@@ -25,7 +25,7 @@ const [message, setMessage] = useState("literally nothing")
 </FetchVidProvider>
   );
 }
-
+//container for main app content, used to allow global esc access to fetchvideo context
 function AppContent(){
   const {getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex} = useFetchVid();
 
