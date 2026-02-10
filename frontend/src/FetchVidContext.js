@@ -21,15 +21,36 @@ const [prevVid, setPrevVidID] = useState([]);
 //   "tAGnKpE4NCI", // Nothing Else Matters
 // ]);
 const [currentVidID, setCurrentVidID] = useState(null);
-const currentVidIndex = useRef(null);
+const [currentVidIndex, setCurrentVidIndex] = useState(null);
+
+const FetchRandVidID = async () =>{
+    
+    console.log("consulting backend");
+    return await
+  fetch("http://localhost:8080/api/random-video")
+  .then(response => response.text())
+  .then(data => {
+    
+    return data.toString();
+  })
+  .catch(error => console.error("Some stupid error happended: " + error))
+  return "no video found";
+} 
 
 const addVidToMemory = (vidID) =>{
     setPrevVidID(prev => [... prev, vidID]);
     setCurrentVidID(vidID);
+
+    if(prevVid.length == 0){
+        setCurrentVidIndex(0);
+    }
+    else{
+        setCurrentVidIndex(prevVid.length);
+    }
 }
 
 const getPrevVidID = () =>{
-    let currVidIDIndex = currentVidIndex.current
+    let currVidIDIndex = currentVidIndex
     return currVidIDIndex - 1 >= 0 ? prevVid[currVidIDIndex - 1] : null;
 }
 
@@ -38,14 +59,14 @@ const getSavedVidList = () => {
 }
 
 const moveToPrevVidID = () => {
-    let i = currentVidIndex.current;
+    let i = currentVidIndex;
         if(i - 1 > 0){
-        currentVidIndex.current = i - 1;
-setCurrentVidID(prevVid[currentVidIndex.current]);
+        setCurrentVidIndex(i - 1);
+        setCurrentVidID(prevVid[i - 1]);
     }
     else if(prevVid.length > 0){
-        currentVidIndex.current = 0;
-setCurrentVidID(prevVid[currentVidIndex.current]);
+        setCurrentVidIndex(0);
+        setCurrentVidID(prevVid[0]);
     }
     else{
         APIFindVidBySearch();
@@ -53,19 +74,17 @@ setCurrentVidID(prevVid[currentVidIndex.current]);
 }
 
 const moveToNextVidID = async () => {
-
-    //could be improved by using map or saving index, however for this small scale projects its unnecessary
 if(prevVid != null){
 
     //console.log(prevVid.length.toString() + " " + prevVid.findIndex(currentVidID).toString());
 
-    let i = currentVidIndex.current;
+    let i = currentVidIndex;
 
     if(i + 1 < prevVid.length){
        
-        currentVidIndex.current = i + 1;
-        setCurrentVidID(prevVid[currentVidIndex.current]);
-         console.log("Moved to next video:  " + currentVidIndex.current);
+        setCurrentVidIndex(i + 1);
+        setCurrentVidID(prevVid[i + 1]);
+         console.log("Moved to next video:  " + (i + 1));
 return;
 }
     console.log("Fetching new video as there is no current video");
@@ -87,31 +106,23 @@ const GenerateSearchWords = () => {
 }
   
 const APIFindVidBySearch = async () => {
-    console.log("start of fetch");
-    const API_KEY = "no your mom"; // Replace with your actual API key
-    let searchWord = GenerateSearchWords();
-//fetches 1st video from youtube api v3
-await fetch(`https://www.googleapis.com/youtube/v3/search?` +
-      `part=snippet&type=video&maxResults=1&q=${searchWord}&safeSearch=none&key=${API_KEY}`
-    ).then(response => response.json().then(data => {
-         if (data.items && data.items.length > 0) {
-         addVidToMemory(data.items[0].id.videoId);
-         currentVidIndex.current = prevVid.length;
-         console.log("Fetched new video with search term: " + searchWord);
-      }
-      else{
-        console.error("No video results found for the search term: " + searchWord + " \n Try Checking if API valid and still has quota left");
-      }
+
+    try{
+    let VidID = await FetchRandVidID();
+     addVidToMemory(VidID);
+    console.log("Fetched and added new video to memory: " + VidID);
     }
-
-)).catch(error => console.error("Error fetching video: " + error));
-
-  console.log("end of fetch");
+    catch(error){
+        console.error("Error fetching video: " + error);
+        console.log("retrying...");
+        APIFindVidBySearch();   
+    }
 }
 
-
+//initializes first video when page loads
 useEffect(() => {
-    moveToNextVidID();
+    APIFindVidBySearch();
+    //moveToNextVidID();
 }, []);
 return(
     <FetchVidContext.Provider value={{addVidToMemory, getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex}}>

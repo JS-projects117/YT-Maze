@@ -2,21 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import React, {useState, useEffect} from "react";
 import { useFetchVid, FetchVidProvider } from './FetchVidContext';
-
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function App() {
-
-const [message, setMessage] = useState("literally nothing")
-
-//connection to backend
-// useEffect( () => {
-//   fetch("http://localhost:8080/api/testpage")
-//   .then(response => response.text())
-//   .then(data => setMessage(data))
-//   .catch(error => console.error("Some stupid error happended: " + error))
-// }
-// )
 
   return (
 
@@ -30,8 +19,6 @@ function AppContent(){
   const {getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex} = useFetchVid();
 
 function VideoDisplayFetch(){
-
-
 const containerRef = React.useRef(null);
 const [centerX, setCenterX] = React.useState(null);
 
@@ -41,8 +28,7 @@ useEffect(() => {
   }
 }, []);
 
-
-console.log("VIDEO ID:  " + currentVidID);
+//console.log("VIDEO ID:  " + currentVidID);
 return(
 
   <div className="carousel_container" ref={containerRef}>
@@ -53,7 +39,7 @@ return(
 let vidWidthHeight = 450;
 
 
-              let currVid = currentVidIndex.current;
+              let currVid = currentVidIndex;
 //restricts rendered vids to only 5 on screen at a time
 let imgDistance = Math.abs(index - currVid)
 if(!(imgDistance < 3)){
@@ -116,6 +102,22 @@ function VideoNavButtons(){
   )
 }
 
+function VideoRateDropdown(){
+  return (
+    <Dropdown>
+      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+        Rate Video
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/1">1 Star</Dropdown.Item>
+        <Dropdown.Item href="#/2">2 Stars</Dropdown.Item>
+        <Dropdown.Item href="#/3">3 Stars</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+}
+
 
   return(
 <div className = "app_container">
@@ -124,6 +126,7 @@ function VideoNavButtons(){
   <div className="carousel_wrapper">
 <VideoDisplayFetch/>
 <VideoNavButtons/>
+<VideoRateDropdown/>
 </div>
 </div>
   );
