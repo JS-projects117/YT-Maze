@@ -3,7 +3,7 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import { useFetchVid, FetchVidProvider } from './FetchVidContext';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import Foo from "./starRating"
 
 function App() {
 
@@ -89,11 +89,11 @@ return(
 function VideoNavButtons(){
   return(
     <div className="video_nav_buttons">
-    <button onClick = {
+    <button className="nav-button" onClick = {
       () => {
       moveToPrevVidID();
     }}>Prev Video</button>
-    <button onClick = {() => {
+    <button className="nav-button" onClick = {() => {
 
     moveToNextVidID();
    
@@ -103,19 +103,31 @@ function VideoNavButtons(){
 }
 
 function VideoRateDropdown(){
-  return (
-    <Dropdown>
-      <Dropdown.Toggle variant="primary" id="dropdown-basic">
-        Rate Video
-      </Dropdown.Toggle>
+  const [selected, setSelected] = useState(false)
+  const [currentlyRating, setCurrentlyRating] = useState(null)
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/1">1 Star</Dropdown.Item>
-        <Dropdown.Item href="#/2">2 Stars</Dropdown.Item>
-        <Dropdown.Item href="#/3">3 Stars</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+  if(selected === true && currentlyRating === null){
+  return (
+<div>
+      <button className='rating-button' onClick={() => setCurrentlyRating("")}>Funny</button>
+    <button className='rating-button' onClick={() => setCurrentlyRating("")}>Scary</button>
+    <button className='rating-button' onClick={() => setCurrentlyRating("")}> Interesting</button>
+</div>
   );
+}else if(currentlyRating !== null){
+return(
+<>
+<Foo></Foo>
+</>
+);
+}
+  else{
+  return(
+    <div>
+      <button className='rating-button' value="red" onClick={() => setSelected(true)}>Rate Video</button>
+</div>
+)
+}
 }
 
 
@@ -139,7 +151,7 @@ function HeaderNavbar(){
 <div className="header_navbar">
 
 <text className="app_title">Random Video Recommender</text>
-  <button onClick={{}}>Top Funniest</button>
+  <button className="" onClick={{}}>Top Funniest</button>
    <button onClick={{}}>Top Scariest</button>
 </div>
 

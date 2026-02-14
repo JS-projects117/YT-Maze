@@ -6,7 +6,7 @@
   align-content: center;
 }
 
-button{
+.nav-button{
   width: 200px;
   height: 50px;
   font-size: 20px;
@@ -50,5 +50,16 @@ flex-direction: column-reverse ;
 .carousel_wrapper{
   display: flex;
   flex-direction: column;
+}
+.rating-button {        
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #442062;
+  border-color: #0073ff;
+  margin-top: 10px;
+  border-radius: 10px;
+
 }
 

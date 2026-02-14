@@ -37,9 +37,22 @@ const FetchRandVidID = async () =>{
   return "no video found";
 } 
 
+const SaveVidOrUpdateRating = async (videoId, rating) =>{
+
+    return await
+  fetch(`http://localhost:8080/api/save-update_rating?videoId=${videoId}&rating=${rating}`,{method:"POST"})
+  .then(response => response.text())
+  .then(data => {
+
+return "success"
+  })
+  .catch(error => console.error("Some stupid error happended: " + error))
+} 
+
 const addVidToMemory = (vidID) =>{
     setPrevVidID(prev => [... prev, vidID]);
     setCurrentVidID(vidID);
+    SaveVidOrUpdateRating(vidID, 0)
 
     if(prevVid.length == 0){
         setCurrentVidIndex(0);

@@ -7,7 +7,7 @@ import com.mazetube.rand_vid_finder.entities.FunniestVideos;
 
     @Repository
     public interface FunniestVidRepository extends JpaRepository<FunniestVideos, Long> {
-       // List<FunniestVideos> findById(Long id);
+       List<FunniestVideos> findByVideoId(String videoId);
 
         
     }
