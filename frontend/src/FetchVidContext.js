@@ -37,7 +37,7 @@ const FetchRandVidID = async () =>{
   return "no video found";
 } 
 
-const SaveVidOrUpdateRating = async (videoId, rating) =>{
+const SaveVidOrUpdateRating = async (videoId, rating, category = null) =>{
 
     return await
   fetch(`http://localhost:8080/api/save-update_rating?videoId=${videoId}&rating=${rating}`,{method:"POST"})
@@ -138,7 +138,7 @@ useEffect(() => {
     //moveToNextVidID();
 }, []);
 return(
-    <FetchVidContext.Provider value={{addVidToMemory, getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex}}>
+    <FetchVidContext.Provider value={{addVidToMemory, getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex, SaveVidOrUpdateRating}}>
         {children}
         </FetchVidContext.Provider>
 )

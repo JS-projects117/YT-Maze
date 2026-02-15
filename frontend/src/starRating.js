@@ -1,51 +1,20 @@
-import Ratings from 'react-ratings-declarative';
-import { Component } from 'react';
-
-class Foo extends Component {
-    changeRating( newRating ) {
-      this.setState({
-        rating: newRating
-      });
-    }
-
-    render() {
-      return (
-          <Ratings
-            rating={this.state.rating}
-            widgetRatedColors="blue"
-            changeRating={this.changeRating}
-          >
-            <Ratings.Widget />
-            <Ratings.Widget />
-            <Ratings.Widget
-              widgetDimension="60px"
-              svgIconViewBox="0 0 5 5"
-              svgIconPath="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z"
-            />
-            <Ratings.Widget widgetHoverColor="black" />
-            <Ratings.Widget />
-          </Ratings>
-      );
-    }
+function Foo({ rating, setRating }) {
+  return (
+    <div style={{ fontSize: "40px" }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          style={{
+            cursor: "pointer",
+            color: star <= rating ? "#ffd700" : "#ccc"
+          }}
+          onClick={() => setRating(star)}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
 }
 
-
-class Bar extends Component {
-  render() {
-    return (
-      <Ratings
-        rating={3.403}
-        widgetDimensions="40px"
-        widgetSpacings="15px"
-      >
-        <Ratings.Widget widgetRatedColor="green" />
-        <Ratings.Widget widgetSpacing="30px" widgetDimension="15px" />
-        <Ratings.Widget widgetRatedColor="black" />
-        <Ratings.Widget widgetRatedColor="rebeccapurple" />
-        <Ratings.Widget />
-      </Ratings>
-    );
-  }
-}
-
-export default Foo
+export default Foo;

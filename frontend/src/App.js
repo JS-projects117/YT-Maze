@@ -16,7 +16,7 @@ function App() {
 }
 //container for main app content, used to allow global esc access to fetchvideo context
 function AppContent(){
-  const {getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex} = useFetchVid();
+  const {getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex, SaveVidOrUpdateRating} = useFetchVid();
 
 function VideoDisplayFetch(){
 const containerRef = React.useRef(null);
@@ -103,21 +103,26 @@ function VideoNavButtons(){
 }
 
 function VideoRateDropdown(){
-  const [selected, setSelected] = useState(false)
-  const [currentlyRating, setCurrentlyRating] = useState(null)
+  const [selected, setSelected] = useState(false);
+  const [currentlyRating, setCurrentlyRating] = useState(null);
+  const [rating, setRating] = useState(0);
+
+if(rating > 0){
+ SaveVidOrUpdateRating(currentVidID,rating, currentlyRating);
+}
 
   if(selected === true && currentlyRating === null){
   return (
 <div>
-      <button className='rating-button' onClick={() => setCurrentlyRating("")}>Funny</button>
-    <button className='rating-button' onClick={() => setCurrentlyRating("")}>Scary</button>
-    <button className='rating-button' onClick={() => setCurrentlyRating("")}> Interesting</button>
+      <button className='rating-button' onClick={() => setCurrentlyRating("humor")}>Funny</button>
+    <button className='rating-button' onClick={() => setCurrentlyRating("fear")}>Scary</button>
+    <button className='rating-button' onClick={() => setCurrentlyRating("interest")}> Interesting</button>
 </div>
   );
 }else if(currentlyRating !== null){
 return(
 <>
-<Foo></Foo>
+<Foo rating={rating} setRating={setRating}/>
 </>
 );
 }
