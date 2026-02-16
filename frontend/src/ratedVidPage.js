@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom"
+
  export default function RatedVidPage(){
+const navigate = useNavigate();
     return(
         <div className="rated-vid-page">
+            <button onClick={() => navigate("/")}>
+                RETURN
+            </button>
             <RatedVideoColumn/>
         </div>
     )

@@ -3,15 +3,22 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import { useFetchVid, FetchVidProvider } from './FetchVidContext';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Foo from "./starRating"
+import Foo from "./starRating";
+import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
+import RatedVidPage from './ratedVidPage';
 
 function App() {
 
   return (
 
+<BrowserRouter>
 <FetchVidProvider>
-<AppContent/>
+<Routes>
+  <Route path='/' element={<AppContent/>}/>
+  <Route path='/vid-ranking' element={<RatedVidPage/>}/>
+</Routes>
 </FetchVidProvider>
+</BrowserRouter>
   );
 }
 //container for main app content, used to allow global esc access to fetchvideo context
@@ -151,12 +158,13 @@ return(
 
 
 function HeaderNavbar(){
+  const navigate = useNavigate();
   return(
 
 <div className="header_navbar">
 
 <text className="app_title">Random Video Recommender</text>
-  <button className="" onClick={{}}>Top Funniest</button>
+  <button className="" onClick={() =>navigate("/vid-ranking")}>Top Funniest</button>
    <button onClick={{}}>Top Scariest</button>
 </div>
 
