@@ -1,5 +1,6 @@
 import { createContext, useContext, useRef, useState, useEffect   } from "react";
 import {nouns} from "./wordBank";
+import { RatingTypes } from "./RatingTypes";
 
 const FetchVidContext = createContext();
 
@@ -39,6 +40,8 @@ const FetchRandVidID = async () =>{
 
 const SaveVidOrUpdateRating = async (videoId, rating, category = null) =>{
 
+    let url="";
+    if(category == null){
     return await
   fetch(`http://localhost:8080/api/save-update_rating?videoId=${videoId}&rating=${rating}`,{method:"POST"})
   .then(response => response.text())
@@ -46,8 +49,34 @@ const SaveVidOrUpdateRating = async (videoId, rating, category = null) =>{
 
 return "success"
   })
-  .catch(error => console.error("Some stupid error happended: " + error))
-} 
+  .catch(error => console.error("Error: " + error))
+}
+else{
+    switch(category){
+        case RatingTypes.FUNNY:
+            url=(`http://localhost:8080/api//save-update-funny_rating?videoId=${videoId}&rating=${rating}`);
+            break;
+        case RatingTypes.SCARY:
+            url=(`http://localhost:8080/api//save-update-scary_rating?videoId=${videoId}&rating=${rating}`);
+             break;
+        case RatingTypes.INTERESTING:
+            url=(`http://localhost:8080/api//save-update-interesting_rating?videoId=${videoId}&rating=${rating}`);
+             break;
+        
+    }
+}
+
+    return await
+  fetch(url, {method:"POST"})
+  .then(response => response.text())
+  .then(data => {
+
+return "success"
+  })
+  .catch(error => console.error("Error: " + error))
+}
+
+
 
 const addVidToMemory = (vidID) =>{
     setPrevVidID(prev => [... prev, vidID]);

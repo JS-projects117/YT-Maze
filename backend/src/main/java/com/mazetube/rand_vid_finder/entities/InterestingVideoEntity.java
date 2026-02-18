@@ -1,31 +1,34 @@
 package com.mazetube.rand_vid_finder.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "funny_videos")
-public class FunniestVideos {
-
+@Table(name = "interesting_videos")
+public class InterestingVideoEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // primary key
+    private Long id; //primary key
 
-    @Column(name = "video_id", nullable = false)
+    @Column(name="video_id", nullable = false)
     private String videoId;
 
-    @Column(nullable = false)
+    @Column(nullable=false)
     private Integer rating;
 
-    // Required no-arg constructor
-    public FunniestVideos() {}
+    public InterestingVideoEntity(){}
 
-    // Constructor for convenience
-    public FunniestVideos(String videoId, Integer rating) {
+    public InterestingVideoEntity(String videoId, Integer rating){
         this.videoId = videoId;
         this.rating = rating;
     }
 
-    // Getters and setters
+        // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

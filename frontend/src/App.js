@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Foo from "./starRating";
 import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
 import RatedVidPage from './ratedVidPage';
+import { RatingTypes } from './RatingTypes';
 
 function App() {
 
@@ -111,22 +112,24 @@ function VideoNavButtons(){
 
 function VideoRateDropdown(){
   const [selected, setSelected] = useState(false);
-  const [currentlyRating, setCurrentlyRating] = useState(null);
+  const [category, setCategory] = useState(null);
   const [rating, setRating] = useState(0);
 
+  //if the user inputs any rating the rating in the db will be updates
+  //TODO add selection limit to prevent overrating exploit
 if(rating > 0){
- SaveVidOrUpdateRating(currentVidID,rating, currentlyRating);
+ SaveVidOrUpdateRating(currentVidID, rating, category);
 }
 
-  if(selected === true && currentlyRating === null){
+  if(selected === true && category === null){
   return (
 <div>
-      <button className='rating-button' onClick={() => setCurrentlyRating("humor")}>Funny</button>
-    <button className='rating-button' onClick={() => setCurrentlyRating("fear")}>Scary</button>
-    <button className='rating-button' onClick={() => setCurrentlyRating("interest")}> Interesting</button>
+      <button className='rating-button' onClick={() => setCategory(RatingTypes.FUNNY)}>Funny</button>
+    <button className='rating-button' onClick={() => setCategory(RatingTypes.SCARY)}>Scary</button>
+    <button className='rating-button' onClick={() => setCategory(RatingTypes.INTERESTING)}> Interesting</button>
 </div>
   );
-}else if(currentlyRating !== null){
+}else if(category !== null){
 return(
 <>
 <Foo rating={rating} setRating={setRating}/>
