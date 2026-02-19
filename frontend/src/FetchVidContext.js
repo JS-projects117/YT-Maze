@@ -54,13 +54,13 @@ return "success"
 else{
     switch(category){
         case RatingTypes.FUNNY:
-            url=(`http://localhost:8080/api//save-update-funny_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`http://localhost:8080/api/save-update-funny_rating?videoId=${videoId}&rating=${rating}`);
             break;
         case RatingTypes.SCARY:
-            url=(`http://localhost:8080/api//save-update-scary_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`http://localhost:8080/api/save-update-scary_rating?videoId=${videoId}&rating=${rating}`);
              break;
         case RatingTypes.INTERESTING:
-            url=(`http://localhost:8080/api//save-update-interesting_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`http://localhost:8080/api/save-update-interesting_rating?videoId=${videoId}&rating=${rating}`);
              break;
         
     }

@@ -14,7 +14,10 @@ public class FunniestVideos {
     private String videoId;
 
     @Column(nullable = false)
-    private Integer rating;
+    private Float rating;
+
+    @Column(name = "vote_count", nullable = false)
+    private Long voteCount = 0L;
 
     // Required no-arg constructor
     public FunniestVideos() {}
@@ -22,7 +25,7 @@ public class FunniestVideos {
     // Constructor for convenience
     public FunniestVideos(String videoId, Integer rating) {
         this.videoId = videoId;
-        this.rating = rating;
+        this.rating = rating.floatValue();
     }
 
     // Getters and setters
@@ -33,6 +36,9 @@ public class FunniestVideos {
     public String getVideoId() { return videoId; }
     public void setVideoId(String videoId) { this.videoId = videoId; }
 
-    public Integer getRating() { return rating; }
-    public void setRating(Integer rating) { this.rating = rating; }
+    public Float getRating() { return rating; }
+    public void setRating(Float rating) { this.rating = rating.floatValue(); }
+
+    public Long getVoteCount(){return voteCount;}
+    public void setVoteCount(Long val){this.voteCount = val;}
 }

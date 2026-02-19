@@ -28,13 +28,6 @@ function AppContent(){
 
 function VideoDisplayFetch(){
 const containerRef = React.useRef(null);
-const [centerX, setCenterX] = React.useState(null);
-
-useEffect(() => {
-  if(containerRef.current){
-    setCenterX(containerRef.current.offsetWidth / 2)
-  }
-}, []);
 
 //console.log("VIDEO ID:  " + currentVidID);
 return(
@@ -54,6 +47,7 @@ if(!(imgDistance < 3)){
   return;
 }
 
+let centerX = window.innerWidth/2;
 let xOffset = 0;
 
 let sizeOffset = Math.abs(index - currVid) + 1;
@@ -72,16 +66,16 @@ if(index !== currVid){
         return(
     //console.log("x center is " + centerX),
     //divides width by 2 to center video at a position then applies calculated offset e.g. + xOffset
-    <div className="video_container" style={{transform: `translateX(${((centerX - (scaledWidth/2)) + xOffset)}px) translateY(20px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
-<img width={(scaledWidth)} height={scaledWidth} src={`https://img.youtube.com/vi/${vidID}/hqdefault.jpg`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    <div className="video_container" style={{transform: `translateX(${xOffset}px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
+<img style={{borderRadius:"15px", boxShadow:`0 ${8/Math.abs(distance)}px 5px`}} width={(scaledWidth)} height={scaledWidth} src={`https://img.youtube.com/vi/${vidID}/hqdefault.jpg`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </img>
     </div>
         )
       }
       else{
 return(
-    <div className="video_container" style={{transform: `translateX(${((centerX - (scaledWidth/2)) + xOffset)}px) translateY(20px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
-<iframe width={scaledWidth} height={scaledWidth} src={`https://www.youtube.com/embed/${vidID}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen>
+    <div className="video_container" style={{transform: `translateX(${xOffset}px)`, position: "absolute", opacity: (1 / 1.5) ** Math.abs(index - currVid) }}>
+<iframe style={{borderRadius:"15px", boxShadow:"0 8px 5px"}} width={scaledWidth} height={scaledWidth} src={`https://www.youtube.com/embed/${vidID}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen>
 </iframe>
     </div>
 )
@@ -97,6 +91,8 @@ return(
 function VideoNavButtons(){
   return(
     <div className="video_nav_buttons">
+      <div style={{display:'flex', flexDirection:"column"}}>
+    <div style={{display:'flex', flexDirection:"row"}}>
     <button className="nav-button" onClick = {
       () => {
       moveToPrevVidID();
@@ -106,6 +102,9 @@ function VideoNavButtons(){
     moveToNextVidID();
    
     }}>New Video</button>
+    </div>
+    <VideoRateDropdown/>
+    </div>
     </div>
   )
 }
@@ -150,11 +149,9 @@ return(
 <div className = "app_container">
   
   <HeaderNavbar/>
-  <div className="carousel_wrapper">
+  <h1 className='spin'> HELLO WORLD</h1>
 <VideoDisplayFetch/>
 <VideoNavButtons/>
-<VideoRateDropdown/>
-</div>
 </div>
   );
 }

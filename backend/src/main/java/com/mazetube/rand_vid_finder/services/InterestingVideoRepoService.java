@@ -19,6 +19,7 @@ public class InterestingVideoRepoService
      //updates rating if video exists, adds to repo if not
     public void saveUpdateToRepository(String videoId, Integer rating){
         if(checkVideoInRepo(videoId)){
+            
             updateVideoRating(videoId, rating);
         }
         else{

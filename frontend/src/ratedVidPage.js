@@ -1,35 +1,44 @@
 import { useNavigate } from "react-router-dom"
+import "./ratedVidPage.css"
 
  export default function RatedVidPage(){
 const navigate = useNavigate();
     return(
-        <div className="rated-vid-page">
-            <button onClick={() => navigate("/")}>
+        <>
+        <div className="nav-bar">
+            <button className="nav-button" onClick={() => navigate("/")}>
                 RETURN
             </button>
-            <RatedVideoColumn/>
         </div>
+
+                     <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingTop:"10px"}}>
+            <RatedVideoColumn/>
+            <RatedVideoColumn/>
+            <RatedVideoColumn/>
+            </div>
+        </>
     )
 
 
 
 
     function RatedVideoColumn(){
-
+let mcriblist = [203,1,1,1,1,1];
 
         return(
-            <>
-            <div className="rated-vid-column">
-            {Array.from({length:10}).map((_,i) =>
+
+            <div style={{display:"flex", flexDirection:"column", margin:"10%"}}>
+            {Array.from({length:mcriblist.length}).map((_,i) =>
                 
-                <img src={`https://img.youtube.com/vi/${"dQw4w9WgXcQ"}/hqdefault.jpg`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                
-                </img>
-              
+
+            <button>
+                <img width={300} key={i} src={`https://img.youtube.com/vi/${"dQw4w9WgXcQ"}/hqdefault.jpg`}/>
+              </button>
+
             )}
-            
                 </div>
-                </>
+                
+
         )
     }
 }

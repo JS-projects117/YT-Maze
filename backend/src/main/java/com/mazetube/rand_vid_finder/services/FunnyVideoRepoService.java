@@ -25,18 +25,21 @@ public class FunnyVideoRepoService {
     }
 
     private void updateVideoRating(String videoId, Integer rating){
-        List<FunniestVideos> videoList = repo.findByVideoId(videoId);
-        if(videoList.size() > 0){
-            //only 1 result should be returned at all points no matter what
-           FunniestVideos video = videoList.get(0);
-           video.setRating(rating);
+List<FunniestVideos> videoList = repo.findByVideoId(videoId);
 
-//TODO add video rating calculation logic
+if (!videoList.isEmpty()) {
+    FunniestVideos video = videoList.get(0);
+    long oldCount = video.getVoteCount();
+    Float oldAverage = video.getRating();
+    Float newVote = rating.floatValue();
 
-           //jpa auto translates to SQL update
-           repo.save(video);
+    Float newAverage = ((oldAverage * oldCount) + newVote) / (oldCount + 1);
 
-        }
+    video.setVoteCount(oldCount + 1);
+    video.setRating(newAverage); // store full precision
+    repo.save(video);
+}
+
     }
     
     private boolean checkVideoInRepo(String videoId){

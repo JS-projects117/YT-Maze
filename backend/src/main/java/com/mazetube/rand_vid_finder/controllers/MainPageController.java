@@ -42,6 +42,12 @@ private InterestingVideoRepoService interestingVidService;
         funnyVidService.saveUpdateToRepository(videoId, rating);
     }
 
+
+    @PostMapping("/save-update-funny_rating")
+    public void saveVidUpdateFunnyRating(@RequestParam(name="videoId") String videoId, @RequestParam(name="rating") Integer rating){
+        funnyVidService.saveUpdateToRepository(videoId, rating);
+    }
+
     @PostMapping("/save-update-scary_rating")
     public void saveVidUpdateScaryRating(@RequestParam(name="videoId") String videoId, @RequestParam(name="rating") Integer rating){
         scaryVidService.saveUpdateToRepository(videoId, rating);
