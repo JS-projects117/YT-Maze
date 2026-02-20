@@ -1,16 +1,68 @@
-.nav-bar{
-    display: flex;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 70px;
-    box-shadow: 0 2px 5px rgb(0, 0, 0);
-    background-color: #000000;
-    z-index: 100;
-    
+.app-content {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  background-color: #201533;
 }
-.nav-button{
-    width: 100px;
-    height: 70%;
+.nav-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+
+  align-items: center;       /* vertical centering */
+  justify-content: flex-start; /* items start from left */
+
+  background-color: #252446;
+  box-shadow: 0 2px 5px rgb(0,0,0);
+  z-index: 100;
+
+  font-size: 25px;
+  font-weight: 800;
+  color: #fff;
+  padding: 0 20px;          /* optional spacing */
+}
+
+.nav-title {
+  position: absolute;       /* absolute to center independent of button */
+  left: 50%;                /* center horizontally */
+  transform: translateX(-50%); /* adjust so center is exact */
+  text-align: center;
+}
+
+.ranked-column{
+      font-size: 25px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+}
+.video-stat-bar{
+          font-size: 25px;
+  font-weight: 800;
+  color: #fff;
+}
+img{
+    border-radius: 10%;
+}
+.video-stat-bar{
+  margin: 5%;
+}
+.video-container{
+    border-radius: 10%;
+    background-color: black;
+    margin-top: 20px;
+    box-shadow: 0px 10px 10px black;
+      transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+.video-container:hover{
+              box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+transform: translateY(-20px);
 }

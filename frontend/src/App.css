@@ -2,38 +2,100 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-image: url("../public/background.jpeg");
+  background-image: url("../public/background_images/foreground.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   width: 100vw;
   height: 100vh;
+  z-index: -1;
 }
+
 button.nav-button{
   width: 200px;
   height: 50px;
   font-size: 20px;
   cursor: pointer;
-  background-color: #203562;
-  border-color: #1e579c;
-  margin-top: 10px;
+    font-size: 25px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+
+  background-color: #252446;
+  box-shadow: 0px 10px 20px black;
+
+  border: none;
+  outline: none;
+
+  margin: 20px;
   border-radius: 10px;
 
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+
+button.nav-button:hover{
+  background-color: #442062;
+
+  box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+
+  transform: translateY(-10px); /* optional lift effect */
+}
+
+button.rating-button:hover{
+  background-color: #442062;
+
+  box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+
+  transform: translateY(-10px); /* optional lift effect */
+}
+
+button.rating-button{
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+      font-size: 25px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+
+  background-color: #252446;
+  box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+  border: none;
+  outline: none;
+
+  margin: 10px;
+  border-radius: 10px;
+
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
 }
 
 .header_navbar{
+  display: flex;
   width:100vw;
   height: 70px;
-background-color:#201533;
+background-color:#252446;
 position: fixed;
 top: 0;
 left: 0;
 margin-top: 0;
--webkit-text-fill-color: #0ce6f2;
-align-content: center;
+    font-size: 25px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+
 flex-direction: column-reverse ;
-box-shadow: 0px 5px 20px #201533;
+box-shadow: 0px 5px 20px #000000;
 z-index: 10;
 }
 
@@ -76,27 +138,30 @@ z-index: 10;
 z-index: 10;
 }
 
-.rating-button {        
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #442062;
-  border-color: #0073ff;
-  margin-top: 10px;
-  border-radius: 10px;
-
+.night-background{
+  position: fixed;
+  z-index: -4;
+    background-image: url("../public/background_images/nightbackground.png");
+  width: 100vw;
+  height: 100vh;
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .spin{
   position:fixed;
-  z-index: 0;
+  z-index: -3;
+  background-image: url("../public/background_images/moon.png");
   width: 100vw;
-  height: 100vw;
-  background-color: rgb(0, 0, 0);
-  border-radius: 100%;
+  height: 100vh;
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 
-    animation: spin-background 100s linear infinite;
+    animation: spin-background 200s linear infinite;
 }
 
 @keyframes spin-background{
@@ -109,3 +174,92 @@ z-index: 10;
   }
 }
 
+.cloud{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../public/background_images/clouds.png");
+      background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -2;
+
+  animation: moveCloud 100s linear infinite;
+}
+
+.mountain-foreground{
+    position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../public/background_images/foregroundmountains.png");
+      background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -2;
+}
+
+@keyframes moveCloud{
+
+  from{
+    transform: translateX(-300vw);
+  }
+
+  to{
+    transform: translateX(100vw);
+  }
+
+}
+
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: fixed;
+  width: 0.5%;
+  height: 1%;
+  background: white;
+
+  animation: move linear infinite;
+}
+
+/* random starting positions */
+.particle:nth-child(1) {
+  top: 10%;
+  left: -10px;
+  animation-duration: 10s;
+}
+
+.particle:nth-child(2) {
+  top: 50%;
+  left: -10px;
+  animation-duration: 15s;
+}
+
+.particle:nth-child(3) {
+  top: 80%;
+  left: -10px;
+  animation-duration: 8s;
+}
+
+@keyframes move {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(110vw, 40vh);
+  }
+}

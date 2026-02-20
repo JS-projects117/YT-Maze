@@ -91,7 +91,7 @@ return(
 function VideoNavButtons(){
   return(
     <div className="video_nav_buttons">
-      <div style={{display:'flex', flexDirection:"column"}}>
+      <div style={{display:'flex', flexDirection:"column", alignItems:"center"}}>
     <div style={{display:'flex', flexDirection:"row"}}>
     <button className="nav-button" onClick = {
       () => {
@@ -138,7 +138,7 @@ return(
   else{
   return(
     <div>
-      <button className='rating-button' value="red" onClick={() => setSelected(true)}>Rate Video</button>
+      <button className="nav-button" value="red" onClick={() => setSelected(true)}>Rate Video</button>
 </div>
 )
 }
@@ -149,7 +149,19 @@ return(
 <div className = "app_container">
   
   <HeaderNavbar/>
-  <h1 className='spin'> HELLO WORLD</h1>
+    <div class="mountain-foreground"></div>
+  <div class="cloud"></div>
+  <div class="particle-container">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+    <div class="particle"></div>
+  <div class="particle"></div>
+    <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+    <h1 className='night-background'></h1>
+  <h1 className='spin'></h1>
 <VideoDisplayFetch/>
 <VideoNavButtons/>
 </div>
@@ -163,9 +175,8 @@ function HeaderNavbar(){
 
 <div className="header_navbar">
 
-<text className="app_title">Random Video Recommender</text>
-  <button className="" onClick={() =>navigate("/vid-ranking")}>Top Funniest</button>
-   <button onClick={{}}>Top Scariest</button>
+<text className="app_title"></text>
+  <button className="nav-button" onClick={() =>navigate("/vid-ranking")}>Ranked Videos</button>
 </div>
 
   );
