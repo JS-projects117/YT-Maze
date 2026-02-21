@@ -1,5 +1,7 @@
 package com.mazetube.rand_vid_finder.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,5 +58,10 @@ private InterestingVideoRepoService interestingVidService;
     @PostMapping("/save-update-interesting_rating")
     public void saveVidUpdateInterestingRating(@RequestParam(name="videoId") String videoId, @RequestParam(name="rating") Integer rating){
         interestingVidService.saveUpdateToRepository(videoId, rating);
+    }
+
+    @GetMapping("/get-funny-vids")
+    public Map<String,Float> getFunnyVids(){
+        return funnyVidService.getAllVideos();
     }
 }

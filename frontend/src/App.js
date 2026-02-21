@@ -118,6 +118,7 @@ function VideoRateDropdown(){
   //TODO add selection limit to prevent overrating exploit
 if(rating > 0){
  SaveVidOrUpdateRating(currentVidID, rating, category);
+ moveToNextVidID();
 }
 
   if(selected === true && category === null){
@@ -174,8 +175,7 @@ function HeaderNavbar(){
   return(
 
 <div className="header_navbar">
-
-<text className="app_title"></text>
+   <div className="nav-title">YT Maze</div>
   <button className="nav-button" onClick={() =>navigate("/vid-ranking")}>Ranked Videos</button>
 </div>
 

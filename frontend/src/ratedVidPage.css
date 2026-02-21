@@ -4,6 +4,88 @@
   width: 100vw;
   background-color: #201533;
 }
+.rate-vid-dialogue{
+  display:flex;
+  flex-direction: column;
+  position:fixed;
+align-items: center;
+justify-content: center;
+  top:50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 90%;
+  background-color: #6a5cff;
+  border-radius: 2%;
+  box-shadow: 0px 20px 10px black;
+  z-index: 3;
+}
+.rate-vid-dialogue iframe{
+margin-top: 20px;
+  width: 80%;
+  height: 70%;
+  background-color: #6a5cff;
+  border-radius: 2%;
+  box-shadow: 0px 20px 10px black;
+  z-index: 3;
+}
+.rating-bar{
+  display: flex;
+  flex-direction: column;
+justify-content: center;
+align-items: center;
+  width: fill;
+  height: 20%;
+  background-color: #201533;
+  border-radius: 2%;
+  margin-top: auto;
+  z-index: 3;
+}
+.darken-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+
+}
+.escape-button{
+
+    width: 200px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+      font-size: 25px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+
+  background-color: #252446;
+  box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+  border: none;
+  outline: none;
+
+  margin: 10px;
+  border-radius: 10px;
+
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+.escape-button:hover{
+    background-color: #442062;
+
+  box-shadow:
+    0 0 5px #6a5cff,
+    0 0 10px #6a5cff,
+    0 0 20px #6a5cff,
+    0 0 40px #6a5cff;
+
+  transform: translateY(-10px); /* optional lift effect */
+}
 .nav-bar {
   display: flex;
   position: fixed;
@@ -17,7 +99,7 @@
 
   background-color: #252446;
   box-shadow: 0 2px 5px rgb(0,0,0);
-  z-index: 100;
+  z-index: 1;
 
   font-size: 25px;
   font-weight: 800;
@@ -30,6 +112,7 @@
   left: 50%;                /* center horizontally */
   transform: translateX(-50%); /* adjust so center is exact */
   text-align: center;
+  z-index: 1;
 }
 
 .ranked-column{

@@ -1,8 +1,12 @@
-function Foo({ rating, setRating }) {
+import { useState } from "react";
+
+function Foo({ rating, setRating, fontSize = 40 }) {
+  const [hovered, setHovered] = useState(0);
+
   return (
-    <div style={{ fontSize: "40px" }}>
+    <div style={{ fontSize: `${fontSize}px` }}>
       {[1, 2, 3, 4, 5].map((star) => {
-        const active = star <= rating;
+        const active = star <= (hovered || rating);
 
         return (
           <span
@@ -13,18 +17,21 @@ function Foo({ rating, setRating }) {
 
               textShadow: active
                 ? `
-                  0 3px 5px rgba(0,0,0,0.8),   /* black undershadow */
-                  0 0 8px #ffd700,             /* glow */
+                  0 3px 5px rgba(0,0,0,0.8),
+                  0 0 8px #ffd700,
                   0 0 16px #ffd700
                 `
                 : `
-                  0 10px 20px rgba(0,0,0,0.9),   /* strong black undershadow */
+                  0 10px 20px rgba(0,0,0,0.9),
                   0 10px 20px rgba(0,0,0,0.7)
                 `,
 
-              transition: "all 0.2s ease"
+              transform: hovered >= star ? "scale(1.2)" : "scale(1)",
+              transition: "all 0.15s ease"
             }}
             onClick={() => setRating(star)}
+            onMouseEnter={() => setHovered(star)}
+            onMouseLeave={() => setHovered(0)}
           >
             ★
           </span>

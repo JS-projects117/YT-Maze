@@ -34,7 +34,7 @@ const FetchRandVidID = async () =>{
     
     return data.toString();
   })
-  .catch(error => console.error("Some stupid error happended: " + error))
+  .catch(error => console.error("Some error happended: " + error))
   return "no video found";
 } 
 
