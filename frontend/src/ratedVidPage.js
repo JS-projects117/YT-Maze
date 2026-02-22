@@ -3,9 +3,9 @@ import "./ratedVidPage.css"
 import { useState, useEffect } from "react";
 import Foo from "./starRating";
 
-const FetchFunnyVidRanks = (async () => {
-console.log("fetching ranked funny vids");
-return await(fetch("http://localhost:8080/api/get-funny-vids")
+//category options scary interesting and funny
+const FetchVidRanks = (async (category) => {
+return await(fetch(`http://localhost:8080/api/get-${category}-vids`)
 .then(response => response.json())
 .then(data => {
     return(data)
@@ -14,10 +14,10 @@ return await(fetch("http://localhost:8080/api/get-funny-vids")
 );
 })
 
-const UpdateRating = async (videoId, rating) => {
+const UpdateRating = async (videoId, rating, category) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/save-update-funny_rating?videoId=${videoId}&rating=${rating}`, {method:"POST"}
+            `http://localhost:8080/api/save-update-${category}_rating?videoId=${videoId}&rating=${rating}`, {method:"POST"}
         );
         const data = await response.text();
         return "success";
@@ -30,21 +30,26 @@ const UpdateRating = async (videoId, rating) => {
 
  export default function RatedVidPage(){
 const navigate = useNavigate();
-const [vidId, setVidId] = useState(null); //when not null dialogue will appear
+//stores video id and category in a list
+//a dictionary would be superior for organization
+const [vidInfo, setVidInfo] = useState(null); //when not null dialogue will appear
     return(
         <>
-        {vidId !== null && <RateVideoDialogue/>}
+        {vidInfo !== null && <RateVideoDialogue/>}
         <div className="app-content">
         <div className="nav-bar">
             <button className="nav-button" onClick={() => navigate("/")}>
                 RETURN
             </button>
-            <div className="nav-title">Ranked Videos</div>
+            <div className="nav-title">
+                Ranked Videos
+                <h6 className="nav-description">-See what others think</h6>
+            </div>
         </div>
                      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingTop:"10px"}}>
-            <RatedVideoColumn/>
-            <RatedVideoColumn/>
-            <RatedVideoColumn/>
+            <FunnyVidColumn/>
+            <ScaryVidColumn/>
+            <InterestingVidColumn/>
             </div>
         </div>
         </>
@@ -53,12 +58,12 @@ const [vidId, setVidId] = useState(null); //when not null dialogue will appear
 
 
 
-    function RatedVideoColumn(){
+    function FunnyVidColumn(){
           const [funnyVidMap, setFunnyVidMap] = useState(new Map());
-
+const category = "funny";
   useEffect(() => {
     async function fetchData() {
-      const data = await FetchFunnyVidRanks();
+      const data = await FetchVidRanks(category);
       setFunnyVidMap(new Map(Object.entries(data)));
     }
     fetchData();
@@ -67,7 +72,59 @@ const [vidId, setVidId] = useState(null); //when not null dialogue will appear
         <div className="ranked-column">
             Funniest
             {Array.from(funnyVidMap.entries()).map(([videoId, rating], i) => (
-                <button key={videoId} onClick={() => setVidId(videoId)} className="video-container">
+                <button key={videoId} onClick={() => setVidInfo([videoId,category])} className="video-container">
+                    <img 
+                        width={300} 
+                        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} 
+                        alt={`Video ${videoId}`} 
+                    />
+                    <div className="video-stat-bar">Rating: {(parseFloat(rating).toPrecision(2))}</div>
+                </button>
+            ))}
+        </div>
+    );
+}
+    function ScaryVidColumn(){
+          const [funnyVidMap, setFunnyVidMap] = useState(new Map());
+        const category = "scary";
+  useEffect(() => {
+    async function fetchData() {
+      const data = await FetchVidRanks(category);
+      setFunnyVidMap(new Map(Object.entries(data)));
+    }
+    fetchData();
+  }, []);
+    return (
+        <div className="ranked-column">
+            Scariest
+            {Array.from(funnyVidMap.entries()).map(([videoId, rating], i) => (
+                <button key={videoId} onClick={() => setVidInfo([videoId,category])} className="video-container">
+                    <img 
+                        width={300} 
+                        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} 
+                        alt={`Video ${videoId}`} 
+                    />
+                    <div className="video-stat-bar">Rating: {(parseFloat(rating).toPrecision(2))}</div>
+                </button>
+            ))}
+        </div>
+    );
+}
+    function InterestingVidColumn(){
+          const [funnyVidMap, setFunnyVidMap] = useState(new Map());
+const category = "interesting";
+  useEffect(() => {
+    async function fetchData() {
+      const data = await FetchVidRanks(category);
+      setFunnyVidMap(new Map(Object.entries(data)));
+    }
+    fetchData();
+  }, []);
+    return (
+        <div className="ranked-column">
+            Ineresting
+            {Array.from(funnyVidMap.entries()).map(([videoId, rating], i) => (
+                <button key={videoId} onClick={() => setVidInfo([videoId,category])} className="video-container">
                     <img 
                         width={300} 
                         src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} 
@@ -84,21 +141,22 @@ function RateVideoDialogue(){
     const [rating, setRating] = useState(0);
 document.addEventListener("keydown", function(event){
 if(event.key === "Escape"){
-    setVidId(null);
+    setVidInfo(null);
 }
 })
     if(rating > 0){
-        UpdateRating(vidId, rating)
-        setVidId(null);
+        //vid info stores 0->video id and 1 ->video category e.g. "scary"
+        UpdateRating(vidInfo[0], rating, vidInfo[1])
+        setVidInfo(null);
     }
     return(
         <div className="darken-screen">
         <div className="rate-vid-dialogue">
-<iframe src={`https://www.youtube.com/embed/${vidId}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen>
+<iframe src={`https://www.youtube.com/embed/${vidInfo[0]}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen>
 </iframe>
 <div className="rating-bar">
     <Foo rating={rating} setRating={setRating} fontSize={70}/>
-    <button className="escape-button" onClick={() => setVidId(null)}>Esc</button>
+    <button className="escape-button" onClick={() => setVidInfo(null)}>Esc</button>
 </div>
         </div>
         </div>

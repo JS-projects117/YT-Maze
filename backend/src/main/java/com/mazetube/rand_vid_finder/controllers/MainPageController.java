@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.mazetube.rand_vid_finder.entities.FunniestVideos;
-import com.mazetube.rand_vid_finder.repositories.FunniestVidRepository;
 import com.mazetube.rand_vid_finder.services.FunnyVideoRepoService;
+import com.mazetube.rand_vid_finder.services.GeneralVideoRepoService;
 import com.mazetube.rand_vid_finder.services.InterestingVideoRepoService;
 import com.mazetube.rand_vid_finder.services.ScaryVideoRepoService;
 import com.mazetube.rand_vid_finder.services.YoutubeAPI;
@@ -39,9 +37,12 @@ private ScaryVideoRepoService scaryVidService;
 @Autowired
 private InterestingVideoRepoService interestingVidService;
 
-    @PostMapping("/save-update_rating")
-    public void saveVidOrUpdateRating(@RequestParam(name="videoId") String videoId, @RequestParam(name="rating") Integer rating){
-        funnyVidService.saveUpdateToRepository(videoId, rating);
+@Autowired
+private GeneralVideoRepoService generalVidService;
+
+    @PostMapping("/save-video-general")
+    public void saveVidOrUpdateRating(@RequestParam(name="videoId") String videoId){
+        generalVidService.saveUpdateToRepository(videoId);
     }
 
 
@@ -63,5 +64,13 @@ private InterestingVideoRepoService interestingVidService;
     @GetMapping("/get-funny-vids")
     public Map<String,Float> getFunnyVids(){
         return funnyVidService.getAllVideos();
+    }
+        @GetMapping("/get-scary-vids")
+    public Map<String,Float> getScaryVids(){
+        return scaryVidService.getAllVideos();
+    }
+        @GetMapping("/get-interesting-vids")
+    public Map<String,Float> getInterestingVids(){
+        return interestingVidService.getAllVideos();
     }
 }

@@ -3,16 +3,11 @@ package com.mazetube.rand_vid_finder.services;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.mazetube.rand_vid_finder.entities.FunniestVideos;
 import com.mazetube.rand_vid_finder.repositories.FunniestVidRepository;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 
 @Service
 public class FunnyVideoRepoService {
@@ -41,7 +36,6 @@ public class FunnyVideoRepoService {
                     FunniestVideos::getRating,           // value
                     (oldVal, newVal) -> oldVal,          // merge function (keeps first if duplicate)
                     LinkedHashMap::new                    // map supplier to preserve order
-            //TODO exclude unrated
                 ));
     }
 
@@ -57,7 +51,7 @@ if (!videoList.isEmpty()) {
     Float newAverage = ((oldAverage * oldCount) + newVote) / (oldCount + 1);
 
     video.setVoteCount(oldCount + 1);
-    video.setRating(newAverage); // store full precision
+    video.setRating(newAverage); // stores full precision
     repo.save(video);
 }
 

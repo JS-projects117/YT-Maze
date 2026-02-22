@@ -24,7 +24,7 @@ function App() {
 }
 //container for main app content, used to allow global esc access to fetchvideo context
 function AppContent(){
-  const {getPrevVidID, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex, SaveVidOrUpdateRating} = useFetchVid();
+  const {setShowError, showError, currentVidID, moveToPrevVidID, moveToNextVidID, getSavedVidList, currentVidIndex, SaveVidOrUpdateRating} = useFetchVid();
 
 function VideoDisplayFetch(){
 const containerRef = React.useRef(null);
@@ -109,6 +109,23 @@ function VideoNavButtons(){
   )
 }
 
+function ErrorDialogue(){
+document.addEventListener("keydown", function(event){
+if(event.key === "Escape"){
+    setShowError(false)
+}
+})
+
+    return(
+        <div className="darken-screen">
+        <div className="rate-vid-dialogue">
+<div className='error-text'>Video Requests Are Shared Among Users and Do Run Out, Please Check The Site Again Tomorrow When More Requests Are Available.</div>
+    <button className="escape-button" onClick={() => setShowError(false)}>Esc</button>
+
+        </div>
+        </div>
+    )
+}
 function VideoRateDropdown(){
   const [selected, setSelected] = useState(false);
   const [category, setCategory] = useState(null);
@@ -118,7 +135,7 @@ function VideoRateDropdown(){
   //TODO add selection limit to prevent overrating exploit
 if(rating > 0){
  SaveVidOrUpdateRating(currentVidID, rating, category);
- moveToNextVidID();
+
 }
 
   if(selected === true && category === null){
@@ -163,8 +180,9 @@ return(
 </div>
     <h1 className='night-background'></h1>
   <h1 className='spin'></h1>
-<VideoDisplayFetch/>
-<VideoNavButtons/>
+{!showError && <VideoDisplayFetch/>}
+{!showError && <VideoNavButtons/>}
+{showError && <ErrorDialogue/>}
 </div>
   );
 }

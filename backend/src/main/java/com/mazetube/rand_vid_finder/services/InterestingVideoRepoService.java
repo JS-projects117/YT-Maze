@@ -1,25 +1,26 @@
 package com.mazetube.rand_vid_finder.services;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mazetube.rand_vid_finder.entities.FunniestVideos;
 import com.mazetube.rand_vid_finder.entities.InterestingVideoEntity;
-import com.mazetube.rand_vid_finder.entities.ScaryVideoEntity;
 import com.mazetube.rand_vid_finder.repositories.InterestingVidRepository;
-import com.mazetube.rand_vid_finder.repositories.ScaryVidRepository;
+import java.util.Map;
+
 
 
 @Service
 public class InterestingVideoRepoService
  {
-    @Autowired 
+     
+    @Autowired
     InterestingVidRepository repo;
 
-     //updates rating if video exists, adds to repo if not
+    //updates rating if video exists, adds to repo if not
     public void saveUpdateToRepository(String videoId, Integer rating){
         if(checkVideoInRepo(videoId)){
-            
             updateVideoRating(videoId, rating);
         }
         else{
@@ -27,19 +28,36 @@ public class InterestingVideoRepoService
         }
     }
 
+    public Map<String, Float> getAllVideos(){
+        List<InterestingVideoEntity> vidInfo = repo.findAll();
+
+    return vidInfo.stream()
+            .filter(v -> v.getRating() > 0)
+            .sorted((v1, v2) -> Float.compare(v2.getRating(), v1.getRating())) // descending
+            .collect(Collectors.toMap(
+                    InterestingVideoEntity::getVideoId,          // key
+                    InterestingVideoEntity::getRating,           // value
+                    (oldVal, newVal) -> oldVal,          // merge function (keeps first if duplicate)
+                    LinkedHashMap::new                    // map supplier to preserve order
+                ));
+    }
+
     private void updateVideoRating(String videoId, Integer rating){
-        List<InterestingVideoEntity> videoList = repo.findByVideoId(videoId);
-        if(videoList.size() > 0){
-            //only 1 result should be returned at all points no matter what
-           InterestingVideoEntity video = videoList.get(0);
-           video.setRating(rating);
+List<InterestingVideoEntity> videoList = repo.findByVideoId(videoId);
 
-//TODO add video rating calculation logic
+if (!videoList.isEmpty()) {
+    InterestingVideoEntity video = videoList.get(0);
+    long oldCount = video.getVoteCount();
+    Float oldAverage = video.getRating();
+    Float newVote = rating.floatValue();
 
-           //jpa auto translates to SQL update
-           repo.save(video);
+    Float newAverage = ((oldAverage * oldCount) + newVote) / (oldCount + 1);
 
-        }
+    video.setVoteCount(oldCount + 1);
+    video.setRating(newAverage); // stores full precision
+    repo.save(video);
+}
+
     }
     
     private boolean checkVideoInRepo(String videoId){

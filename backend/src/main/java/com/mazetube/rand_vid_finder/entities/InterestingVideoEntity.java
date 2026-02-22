@@ -10,25 +10,30 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "interesting_videos")
 public class InterestingVideoEntity {
-    
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //primary key
+    private Long id; // primary key
 
-    @Column(name="video_id", nullable = false)
+    @Column(name = "video_id", nullable = false)
     private String videoId;
 
-    @Column(nullable=false)
-    private Integer rating;
+    @Column(nullable = false)
+    private Float rating;
 
-    public InterestingVideoEntity(){}
+    @Column(name = "vote_count", nullable = false)
+    private Long voteCount = 0L;
 
-    public InterestingVideoEntity(String videoId, Integer rating){
+    // Required no-arg constructor
+    public InterestingVideoEntity() {}
+
+    // Constructor for convenience
+    public InterestingVideoEntity(String videoId, Integer rating) {
         this.videoId = videoId;
-        this.rating = rating;
+        this.rating = rating.floatValue();
     }
 
-        // Getters and setters
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -36,6 +41,9 @@ public class InterestingVideoEntity {
     public String getVideoId() { return videoId; }
     public void setVideoId(String videoId) { this.videoId = videoId; }
 
-    public Integer getRating() { return rating; }
-    public void setRating(Integer rating) { this.rating = rating; }
+    public Float getRating() { return rating; }
+    public void setRating(Float rating) { this.rating = rating.floatValue(); }
+
+    public Long getVoteCount(){return voteCount;}
+    public void setVoteCount(Long val){this.voteCount = val;}
 }

@@ -89,6 +89,7 @@ align-items: center;
 .nav-bar {
   display: flex;
   position: fixed;
+  flex-direction: row;
   top: 0;
   left: 0;
   width: 100%;
@@ -108,11 +109,16 @@ align-items: center;
 }
 
 .nav-title {
+  display: flex;
   position: absolute;       /* absolute to center independent of button */
   left: 50%;                /* center horizontally */
   transform: translateX(-50%); /* adjust so center is exact */
-  text-align: center;
+  top: 5px;
   z-index: 1;
+}
+.nav-description{
+    position: absolute;       /* absolute to center independent of button */
+
 }
 
 .ranked-column{

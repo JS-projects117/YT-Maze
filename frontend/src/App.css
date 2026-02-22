@@ -56,6 +56,11 @@ button.rating-button:hover{
 
   transform: translateY(-10px); /* optional lift effect */
 }
+.error-text{
+            font-size: 45px;
+  font-weight: 800;
+  color: #fff;
+}
 
 button.rating-button{
   width: 200px;
