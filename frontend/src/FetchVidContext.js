@@ -11,26 +11,27 @@ const [showError, setShowError] = useState(false);
 const [currentVidID, setCurrentVidID] = useState(null);
 const [currentVidIndex, setCurrentVidIndex] = useState(null);
 
-const FetchRandVidID = async () =>{
-    
+const FetchRandVidID = async () => {
     console.log("consulting backend");
-    return await
-  fetch("http://localhost:8080/api/random-video")
-  .then(response => response.text())
-  .then(data => {
-    if(data !== undefined){
-    return data.toString();
-    }
-  })
-  .catch(error => console.error(error + " Server Likely Down"))
-} 
+    return await fetch(`${process.env.REACT_APP_API_URL}/api/random-video`)
+        .then(response => {
+            if(!response.ok){
+                throw new Error("Bad response: " + response.status);
+            }
+            return response.text();
+        })
+        .then(data => {
+            return data.toString();
+        })
+        .catch(error => console.error(error + " Server Likely Down"))
+}
 
 const SaveVidOrUpdateRating = async (videoId, rating, category = null) =>{
 
     let url="";
     if(category == null){
     return await
-  fetch(`http://localhost:8080/api/save-video-general?videoId=${videoId}`,{method:"POST"})
+  fetch(`${process.env.REACT_APP_API_URL}/api/save-video-general?videoId=${videoId}`,{method:"POST"})
   .then(response => response.text())
   .then(data => {
 
@@ -41,13 +42,13 @@ return "success"
 else{
     switch(category){
         case RatingTypes.FUNNY:
-            url=(`http://localhost:8080/api/save-update-funny_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`${process.env.REACT_APP_API_URL}/api/save-update-funny_rating?videoId=${videoId}&rating=${rating}`);
             break;
         case RatingTypes.SCARY:
-            url=(`http://localhost:8080/api/save-update-scary_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`${process.env.REACT_APP_API_URL}/api/save-update-scary_rating?videoId=${videoId}&rating=${rating}`);
              break;
         case RatingTypes.INTERESTING:
-            url=(`http://localhost:8080/api/save-update-interesting_rating?videoId=${videoId}&rating=${rating}`);
+            url=(`${process.env.REACT_APP_API_URL}/api/save-update-interesting_rating?videoId=${videoId}&rating=${rating}`);
              break;
         
     }

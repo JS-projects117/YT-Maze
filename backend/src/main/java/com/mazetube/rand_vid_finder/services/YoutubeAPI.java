@@ -6,7 +6,7 @@ import com.mazetube.rand_vid_finder.WordBank;
 
 @Service            
 public class YoutubeAPI {
-    private static final String API_KEY = "AIzaSyDtNq1tAvGvJyFBAKyr-lrdBQdJCMD2I3c";
+    private static final String API_KEY = "api key here";
 
     public static String fetchRandVideoID(){
          String response = "";
@@ -19,7 +19,6 @@ System.out.println("fetched  " + searchWords);
          
         }catch(Exception e){
             System.out.println("Error Fetching Video ID, retrying...");
-            fetchRandVideoID();
         }
 
         String searchTerm = "videoId\": \"";

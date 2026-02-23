@@ -6,7 +6,7 @@ plugins {
 
 group = "com.mazetube"
 version = "0.0.1-SNAPSHOT"
-description = "Searches for random youtube videos using a randomely generated keyword"
+description = "Searches for random youtube videos using a randomly generated keyword"
 
 java {
 	toolchain {
@@ -19,14 +19,14 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-rest")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-restclient")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.postgresql:postgresql")
 
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-	testImplementation("org.springframework.boot:spring-boot-starter-data-rest-test")
+	
 	testImplementation("org.springframework.boot:spring-boot-starter-restclient-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")

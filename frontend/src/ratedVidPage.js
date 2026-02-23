@@ -5,7 +5,7 @@ import Foo from "./starRating";
 
 //category options scary interesting and funny
 const FetchVidRanks = (async (category) => {
-return await(fetch(`http://localhost:8080/api/get-${category}-vids`)
+return await(fetch(`${process.env.REACT_APP_API_URL}/api/get-${category}-vids`)
 .then(response => response.json())
 .then(data => {
     return(data)
@@ -17,7 +17,7 @@ return await(fetch(`http://localhost:8080/api/get-${category}-vids`)
 const UpdateRating = async (videoId, rating, category) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/save-update-${category}_rating?videoId=${videoId}&rating=${rating}`, {method:"POST"}
+            `${process.env.REACT_APP_API_URL}/api/save-update-${category}_rating?videoId=${videoId}&rating=${rating}`, {method:"POST"}
         );
         const data = await response.text();
         return "success";

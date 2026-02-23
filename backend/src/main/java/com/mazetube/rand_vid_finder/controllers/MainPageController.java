@@ -17,7 +17,7 @@ import com.mazetube.rand_vid_finder.services.YoutubeAPI;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "*")
 
 
 public class MainPageController {
