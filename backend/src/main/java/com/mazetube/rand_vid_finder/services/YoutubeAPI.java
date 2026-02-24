@@ -1,4 +1,5 @@
 package com.mazetube.rand_vid_finder.services;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -6,9 +7,10 @@ import com.mazetube.rand_vid_finder.WordBank;
 
 @Service            
 public class YoutubeAPI {
-    private static final String API_KEY = "AIzaSyBcifKdDOQVVdQISjOZLeKGvgV_4M3ovzQ";
+@Value("${API_KEY}")
+private String API_KEY;
 
-    public static String fetchRandVideoID(){
+    public String fetchRandVideoID(){
          String response = "";
         try{
         String searchWords = WordBank.getRandomNouns();

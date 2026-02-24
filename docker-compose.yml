@@ -21,6 +21,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      API_KEY: apikey
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: mypassword
@@ -34,7 +35,7 @@ services:
     ports:
       - "3000:80"
     environment:
-      REACT_APP_API_URL: http://192.168.12.9:8000
+      REACT_APP_API_URL: http://192.168.12.9:8080
 
 volumes:
   postgres_data:

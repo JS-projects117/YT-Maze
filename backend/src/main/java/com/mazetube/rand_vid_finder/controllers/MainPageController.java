@@ -17,15 +17,19 @@ import com.mazetube.rand_vid_finder.services.YoutubeAPI;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 
 
 public class MainPageController {
 
+    public final YoutubeAPI youtubeAPI;
+    public MainPageController(YoutubeAPI youtubeAPI){
+        this.youtubeAPI = youtubeAPI;
+    }
+
     @GetMapping("/random-video")
     public String randomVideoID() {
 
-        return YoutubeAPI.fetchRandVideoID();
+        return youtubeAPI.fetchRandVideoID();
     }
 
 @Autowired
