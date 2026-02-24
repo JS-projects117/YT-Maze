@@ -34,7 +34,7 @@ services:
     ports:
       - "3000:80"
     environment:
-      REACT_APP_API_URL: http://192.168.12.239:8000
+      REACT_APP_API_URL: http://192.168.12.9:8000
 
 volumes:
   postgres_data:
