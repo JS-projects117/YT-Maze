@@ -6,7 +6,7 @@ import com.mazetube.rand_vid_finder.WordBank;
 
 @Service            
 public class YoutubeAPI {
-    private static final String API_KEY = "api key here";
+    private static final String API_KEY = "AIzaSyBcifKdDOQVVdQISjOZLeKGvgV_4M3ovzQ";
 
     public static String fetchRandVideoID(){
          String response = "";
