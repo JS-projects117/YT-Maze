@@ -11,6 +11,7 @@ public class YoutubeAPI {
 private String API_KEY;
 
     public String fetchRandVideoID(){
+        System.out.println(API_KEY);
          String response = "";
         try{
         String searchWords = WordBank.getRandomNouns();
