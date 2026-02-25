@@ -43,7 +43,7 @@ const [vidInfo, setVidInfo] = useState(null); //when not null dialogue will appe
             </button>
             <div className="nav-title">
                 Ranked Videos
-                <h6 className="nav-description">-See what others think</h6>
+                <h6 className="nav-description">-User Rankings</h6>
             </div>
         </div>
                      <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingTop:"10px"}}>

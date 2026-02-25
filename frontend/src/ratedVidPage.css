@@ -110,15 +110,18 @@ align-items: center;
 
 .nav-title {
   display: flex;
-  position: absolute;       /* absolute to center independent of button */
-  left: 50%;                /* center horizontally */
-  transform: translateX(-50%); /* adjust so center is exact */
+  flex-direction: column;
+  align-items: center;
+
+  position: absolute;
+  left: 50%;              /* exact center */
+  transform: translateX(-50%); /*shift back 50% */
   top: 5px;
+
   z-index: 1;
 }
 .nav-description{
-    position: absolute;       /* absolute to center independent of button */
-
+position: absolute;
 }
 
 .ranked-column{

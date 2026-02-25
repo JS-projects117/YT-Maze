@@ -7,6 +7,7 @@ import Foo from "./starRating";
 import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
 import RatedVidPage from './ratedVidPage';
 import { RatingTypes } from './RatingTypes';
+import {AboutPage} from './about'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
 <Routes>
   <Route path='/' element={<AppContent/>}/>
   <Route path='/vid-ranking' element={<RatedVidPage/>}/>
+  <Route path='/about' element={<AboutPage/>}/>
 </Routes>
 </FetchVidProvider>
 </BrowserRouter>
@@ -193,10 +195,30 @@ function HeaderNavbar(){
   return(
 
 <div className="header_navbar">
-   <div className="nav-title">YT Maze</div>
-  <button className="nav-button" onClick={() =>navigate("/vid-ranking")}>Ranked Videos</button>
-</div>
 
+  <div className="nav-left">
+    <button
+      className="nav-button"
+      onClick={() => navigate("/vid-ranking")}
+    >
+      Ranked Videos
+    </button>
+  </div>
+
+  <div className="nav-center">
+    Vidi Maze
+  </div>
+
+  <div className="nav-right">
+    <button
+      className="nav-button"
+      onClick={() => navigate("/about")}
+    >
+      About
+    </button>
+  </div>
+
+</div>
   );
 }
 
