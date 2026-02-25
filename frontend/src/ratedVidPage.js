@@ -122,7 +122,7 @@ const category = "interesting";
   }, []);
     return (
         <div className="ranked-column">
-            Ineresting
+            Interesting
             {Array.from(funnyVidMap.entries()).map(([videoId, rating], i) => (
                 <button key={videoId} onClick={() => setVidInfo([videoId,category])} className="video-container">
                     <img 
