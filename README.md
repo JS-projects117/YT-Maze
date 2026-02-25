@@ -2,7 +2,8 @@
 # [vidimaze.quest](https://vidimaze.quest/)
 
 # *About*
->This web app was made for anyone who wants to find new youtube media without recommendations influencing search results. A place where you can maybe find new things and even a ranking page so you can see what others have found. The homepage art and palette were chosen with the idea that you would probably be browsing the site at night so... now you know.
+This web app was made for anyone who wants to find new youtube media without recommendations influencing search results. A place where you can maybe find new things and even a ranking page so you can see what others have found.<br> <br>
+The homepage art and palette were chosen with the idea that you would probably be browsing the site at night so... now you know.
 
 # *Tech Stack*
 - Frontend:
