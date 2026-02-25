@@ -15,5 +15,7 @@
 <code>Spring</code>
 - Database:
 <code>PostgreSQL</code>
+- Hosting:
+<code>Self hosted using a cloudflare tunnel</code>
 - API:
 <code>YouTube Data API v3</code>
